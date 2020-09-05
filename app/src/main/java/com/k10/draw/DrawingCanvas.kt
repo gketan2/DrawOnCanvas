@@ -17,6 +17,7 @@ class DrawingCanvas constructor(
 
     private var latestPath: Path
     private var latestPaint: Paint
+    private var canvasBackgroundColor: Int = 0xFFFFFFFF.toInt()
 
     private var drawingPath: ArrayList<Path> = ArrayList()
     private var drawingPaint: ArrayList<Paint> = ArrayList()
@@ -64,7 +65,7 @@ class DrawingCanvas constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        //canvas?.drawColor(0xFFFF0000.toInt()) // setBackgroundColor of canvas
+        canvas?.drawColor(canvasBackgroundColor) // setBackgroundColor of canvas
         for (x in 0 until numberOfPaths) {
             canvas?.drawPath(drawingPath[x], drawingPaint[x])
         }
@@ -104,6 +105,11 @@ class DrawingCanvas constructor(
 
     fun getAllPath(): ArrayList<Path> {
         return drawingPath
+    }
+
+    fun setBackGroundColor(color: Int){
+        canvasBackgroundColor = color
+        invalidate()
     }
 
     fun getBitmap(): Bitmap? {
