@@ -15,17 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/resetButton"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-
-            android:text="Clear Board"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.cardview.widget.CardView
             android:id="@+id/widthButtonWrapper"
             android:layout_width="0dp"
@@ -96,6 +85,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/penColorButtonWrapper"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="5dp"
@@ -108,9 +98,53 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageButton
+                android:id="@+id/penColorButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/ic_pen"
                 android:background="@drawable/circle_background" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/backgroundColorButtonWrapper"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+
+            app:cardCornerRadius="30dp"
+            app:layout_constraintDimensionRatio="1"
+
+            app:layout_constraintStart_toEndOf="@id/penColorButtonWrapper"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/backgroundColorButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_background"
+                android:src="@drawable/ic_box"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/resetButtonWrapper"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+
+            app:cardCornerRadius="30dp"
+            app:layout_constraintDimensionRatio="1"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_background"
+                android:src="@drawable/ic_delete"/>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

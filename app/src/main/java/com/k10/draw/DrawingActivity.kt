@@ -13,6 +13,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import com.github.dhaval2404.colorpicker.ColorPickerDialog
+import com.github.dhaval2404.colorpicker.model.ColorShape
 import kotlinx.android.synthetic.main.activity_drawing.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,14 +24,31 @@ import kotlinx.coroutines.withContext
 
 class DrawingActivity : AppCompatActivity(), View.OnClickListener {
 
+    private lateinit var viewModel: DrawingActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drawing)
+
+//        viewModel = ViewModelProvider(this)[DrawingActivityViewModel::class.java]
+
+//        savedInstanceState?.let{
+//            if(it.getBoolean("DRAW", false)){
+//                canvas.setAllPaint(viewModel.drawingPaint)
+//                canvas.setAllPath(viewModel.drawingPath)
+//                canvas.setCanvasBackgroundColor(viewModel.canvasBackgroundColor)
+//                canvas.setLatestPaint(viewModel.latestPaint)
+//                canvas.setLatestPath(viewModel.latestPath)
+//                canvas.invalidate()
+//            }
+//        }
 
         resetButton.setOnClickListener(this)
         widthButton.setOnClickListener(this)
         undoButton.setOnClickListener(this)
         saveButton.setOnClickListener(this)
+        penColorButton.setOnClickListener(this)
+        backgroundColorButton.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -36,6 +56,7 @@ class DrawingActivity : AppCompatActivity(), View.OnClickListener {
             R.id.resetButton -> {
                 canvas.reset()
                 undoButton.setImageResource(R.drawable.ic_undo_disabled)
+                DrawableCompat.setTint(backgroundColorButton.drawable, 0xFFFFFF)
             }
             R.id.widthButton -> {
                 selectWidthPopUp()
@@ -50,8 +71,24 @@ class DrawingActivity : AppCompatActivity(), View.OnClickListener {
             R.id.saveButton -> {
                 saveCanvasToStorage()
             }
+            R.id.penColorButton -> {
+                colorPicker("PEN")
+            }
+            R.id.backgroundColorButton -> {
+                colorPicker("BACKGROUND")
+            }
         }
     }
+
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        viewModel.drawingPaint = canvas.getAllPaint()
+//        viewModel.drawingPath = canvas.getAllPath()
+//        viewModel.canvasBackgroundColor = canvas.getCanvasBackgroundColor()
+//        viewModel.latestPaint = canvas.getLatestPaint()
+//        viewModel.latestPath = canvas.getLatestPath()
+//        outState.putBoolean("DRAW", true)
+//        super.onSaveInstanceState(outState)
+//    }
 
     private fun selectWidthPopUp() {
 
@@ -59,7 +96,7 @@ class DrawingActivity : AppCompatActivity(), View.OnClickListener {
         val v: View = inflater.inflate(R.layout.width_select_popup, null)
         val popupWindow = PopupWindow(v, WRAP_CONTENT, WRAP_CONTENT, true)
 
-        popupWindow.showAtLocation(widthButton, Gravity.NO_GRAVITY, 0, widthButton.height)
+        popupWindow.showAtLocation(widthButton, Gravity.NO_GRAVITY, widthButton.x.toInt(), 3*widthButton.height/2)
 
         v.findViewById<ImageButton>(R.id.widthSmall).setOnClickListener {
             canvas.changePaint(10f)
@@ -75,19 +112,44 @@ class DrawingActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun colorPicker(type: String) {
+        ColorPickerDialog.Builder(this)
+            .setColorShape(ColorShape.CIRCLE)
+            .setDefaultColor(0xFFFFFF)
+            .setColorListener { color, _ ->
+                if (type == "PEN"){
+                    canvas.changePaint(color = color)
+                    DrawableCompat.setTint(penColorButton.drawable, color)
+                }else if (type == "BACKGROUND"){
+                    canvas.changeBackgroundColor(color)
+                    DrawableCompat.setTint(backgroundColorButton.drawable, color)
+                }
+            }
+            .show()
+    }
+
     private fun saveCanvasToStorage() {
         if (isReadWritePermissionGranted()) {
             canvas.getBitmap()?.let {
                 CoroutineScope(Dispatchers.IO).launch {
                     val result = FileIO.saveFile(this@DrawingActivity, it)
-                    withContext(Dispatchers.Main){
-                        if(result){
-                            Toast.makeText(this@DrawingActivity, "File Saved....", Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(this@DrawingActivity, "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                    withContext(Dispatchers.Main) {
+                        if (result) {
+                            Toast.makeText(
+                                this@DrawingActivity,
+                                "File Saved....",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this@DrawingActivity,
+                                "Something Went Wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
+                return
             }
             Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show()
         } else {

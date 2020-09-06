@@ -75,6 +75,7 @@ class DrawingCanvas constructor(
         drawingPath.clear()
         drawingPaint.clear()
         numberOfPaths = 0
+        changeBackgroundColor(0xFFFFFF)
         invalidate()
     }
 
@@ -91,7 +92,8 @@ class DrawingCanvas constructor(
     fun isEmpty(): Boolean {
         return numberOfPaths <= 0
     }
-    fun changePaint(width: Float) {
+
+    fun changePaint(width: Float = latestPaint.strokeWidth, color: Int = latestPaint.color) {
         val p = Paint()
         p.isAntiAlias = true
         p.isDither = true
@@ -99,7 +101,7 @@ class DrawingCanvas constructor(
         p.strokeWidth = width
         p.strokeJoin = Paint.Join.MITER
         p.strokeCap = Paint.Cap.ROUND
-        p.color = 0xFF000000.toInt()
+        p.color = color
         latestPaint = p
     }
 
@@ -107,9 +109,25 @@ class DrawingCanvas constructor(
         return drawingPath
     }
 
-    fun setBackGroundColor(color: Int){
+    fun getAllPaint(): ArrayList<Paint>{
+        return drawingPaint
+    }
+
+    fun getCanvasBackgroundColor(): Int{
+        return canvasBackgroundColor
+    }
+
+    fun changeBackgroundColor(color: Int){
         canvasBackgroundColor = color
         invalidate()
+    }
+
+    fun getLatestPath(): Path{
+        return latestPath
+    }
+
+    fun getLatestPaint(): Paint{
+        return latestPaint
     }
 
     fun getBitmap(): Bitmap? {
@@ -117,5 +135,23 @@ class DrawingCanvas constructor(
             return null
 
         return drawToBitmap()
+    }
+
+    fun setAllPaint(paints: ArrayList<Paint>){
+        drawingPaint.clear()
+        drawingPaint.addAll(paints)
+    }
+    fun setAllPath(paths: ArrayList<Path>){
+        drawingPath.clear()
+        drawingPath.addAll(paths)
+    }
+    fun setCanvasBackgroundColor(color: Int){
+        canvasBackgroundColor = color
+    }
+    fun setLatestPaint(latestPaint: Paint){
+        this.latestPaint = latestPaint
+    }
+    fun setLatestPath(latestPath: Path){
+        this.latestPath = latestPath
     }
 }
