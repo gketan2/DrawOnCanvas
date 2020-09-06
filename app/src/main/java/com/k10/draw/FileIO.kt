@@ -18,40 +18,11 @@ class FileIO {
     companion object {
 
         suspend fun saveFile(context: Context, bitmap: Bitmap): Boolean {
-//            val resolver = context.contentResolver
-//            val imageCollection: Uri = if (Build.VERSION.SDK_INT <= 28) {
-//                MediaStore.Images.Media.getContentUri(
-//                    MediaStore.VOLUME_EXTERNAL
-//                )
-//            } else {
-//                MediaStore.Images.Media.getContentUri(
-//                    MediaStore.VOLUME_EXTERNAL_PRIMARY
-//                )
-//            }
-//
-//            println("----------$imageCollection")
-//
-//            val formatter = SimpleDateFormat("yyyyMMdd_hhmmss", Locale.ENGLISH)
-//            val fileName: String = formatter.format(Date())
-//            val newImageDetails = ContentValues().apply {
-//                put(MediaStore.Images.Media.DISPLAY_NAME, "Draw_${fileName}")
-//                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-//                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Draw")
-//            }
-//
-//            val imageUri = resolver.insert(imageCollection, newImageDetails)
-//
-//            println("---------------------$imageUri")
-//
-//            val outputStream = resolver.openOutputStream(imageUri!!)
-//
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-//
 
             val time = System.currentTimeMillis()
 
             val formatter = SimpleDateFormat("yyyyMMdd_hhmmss", Locale.ENGLISH)
-            val fileName: String = "Draw_${formatter.format(Date())}"
+            val fileName = "Draw_${formatter.format(Date())}"
 
             val resolver = context.contentResolver
             if (Build.VERSION.SDK_INT >= 29) {

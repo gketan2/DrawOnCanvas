@@ -21,7 +21,7 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
 
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="50dp"
             app:layout_constraintDimensionRatio="1"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
 
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="50dp"
             app:layout_constraintDimensionRatio="1"
 
             app:layout_constraintStart_toEndOf="@id/widthButtonWrapper"
@@ -67,7 +67,7 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
 
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="50dp"
             app:layout_constraintDimensionRatio="1"
 
             app:layout_constraintStart_toEndOf="@id/undoButtonWrapper"
@@ -90,7 +90,7 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
 
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="50dp"
             app:layout_constraintDimensionRatio="1"
 
             app:layout_constraintStart_toEndOf="@id/saveButtonWrapper"
@@ -111,7 +111,7 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
 
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="50dp"
             app:layout_constraintDimensionRatio="1"
 
             app:layout_constraintStart_toEndOf="@id/penColorButtonWrapper"
@@ -132,7 +132,7 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
 
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="50dp"
             app:layout_constraintDimensionRatio="1"
 
             app:layout_constraintEnd_toEndOf="parent"

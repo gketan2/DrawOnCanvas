@@ -24,24 +24,9 @@ import kotlinx.coroutines.withContext
 
 class DrawingActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var viewModel: DrawingActivityViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drawing)
-
-//        viewModel = ViewModelProvider(this)[DrawingActivityViewModel::class.java]
-
-//        savedInstanceState?.let{
-//            if(it.getBoolean("DRAW", false)){
-//                canvas.setAllPaint(viewModel.drawingPaint)
-//                canvas.setAllPath(viewModel.drawingPath)
-//                canvas.setCanvasBackgroundColor(viewModel.canvasBackgroundColor)
-//                canvas.setLatestPaint(viewModel.latestPaint)
-//                canvas.setLatestPath(viewModel.latestPath)
-//                canvas.invalidate()
-//            }
-//        }
 
         resetButton.setOnClickListener(this)
         widthButton.setOnClickListener(this)
@@ -57,6 +42,7 @@ class DrawingActivity : AppCompatActivity(), View.OnClickListener {
                 canvas.reset()
                 undoButton.setImageResource(R.drawable.ic_undo_disabled)
                 DrawableCompat.setTint(backgroundColorButton.drawable, 0xFFFFFF)
+                DrawableCompat.setTint(penColorButton.drawable, 0x000000)
             }
             R.id.widthButton -> {
                 selectWidthPopUp()
@@ -79,16 +65,6 @@ class DrawingActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        viewModel.drawingPaint = canvas.getAllPaint()
-//        viewModel.drawingPath = canvas.getAllPath()
-//        viewModel.canvasBackgroundColor = canvas.getCanvasBackgroundColor()
-//        viewModel.latestPaint = canvas.getLatestPaint()
-//        viewModel.latestPath = canvas.getLatestPath()
-//        outState.putBoolean("DRAW", true)
-//        super.onSaveInstanceState(outState)
-//    }
 
     private fun selectWidthPopUp() {
 
